@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="JMC_Photo_Gallery.UserControl_ManagedImage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pd="clr-namespace:JMC_Photo_Gallery"
+    Name="x_MainControl" Height="200" Width="200"
+             Loaded="x_MainControl_Loaded" Unloaded="x_MainControl_Unloaded" IsVisibleChanged="x_MainControl_IsVisibleChanged">
+    <Grid Name="x_Grid" Background="Gray"
+          Width="{Binding ElementName=x_MainControl, Path=ActualWidth}"
+          Height="{Binding ElementName=x_MainControl, Path=ActualHeight}">
+        <Image Name="x_ImageThumb" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"
+            Width="{Binding ElementName=x_MainControl, Path=ActualWidth}"
+            Height="{Binding ElementName=x_MainControl, Path=ActualHeight}" />
+        <Image Name="x_Image" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"
+            Width="{Binding ElementName=x_MainControl, Path=ActualWidth}"
+            Height="{Binding ElementName=x_MainControl, Path=ActualHeight}" />
+    </Grid>
+</UserControl>

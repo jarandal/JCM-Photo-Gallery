@@ -1,0 +1,191 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <LinearGradientBrush x:Key="WindowGradient" EndPoint="0.442,0.656" StartPoint="0.812,0.096" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect">
+        <GradientStop Color="#FF555555" Offset="0"/>
+        <GradientStop Color="#7FC16800" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="WindowGradient1" StartPoint="0,0.3" EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Color="#B2B6CAFF" Offset="0" />
+            <GradientStop Color="#BFC3D5FF" Offset="0.1" />
+            <GradientStop Color="#E0E4F0FF" Offset="0.3" />
+            <GradientStop Color="#E6EAF5FF" Offset="0.5" />
+            <GradientStop Color="#CFD7E2FF" Offset="0.6" />
+            <GradientStop Color="#BFC5D3FF" Offset="0.8" />
+            <GradientStop Color="#FF000000" Offset="1" /><!--C4CBD8FF-->
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="WindowGradient2" SpreadMethod="Reflect" RadiusX="320" RadiusY="240" GradientOrigin="320,240" MappingMode="Absolute" Center="320,240">
+        <RadialGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterX="0.9" CenterY="0.1" ScaleX="0.257" ScaleY="0.176"/>
+                <SkewTransform AngleX="0" AngleY="0" CenterX="0.5" CenterY="0.5"/>
+                <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5"/>
+                <TranslateTransform X="0.046" Y="0.001"/>
+            </TransformGroup>
+        </RadialGradientBrush.RelativeTransform>
+        <GradientStop Color="#FF537A58" Offset="0"/>
+        <GradientStop Color="#FFA7FFB2" Offset="1"/>
+    </RadialGradientBrush>
+
+    <!-- Control TEMPLATES -->
+
+    <ControlTemplate x:Key="GlassButton" TargetType="{x:Type Button}">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="Timeline1">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="Timeline2">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ControlTemplate.Resources>
+        <Border BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+            <Border x:Name="border" Background="#7F000000" BorderBrush="#FF000000" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.507*"/>
+                        <RowDefinition Height="0.493*"/>
+                    </Grid.RowDefinitions>
+                    <Border Opacity="0" HorizontalAlignment="Stretch" x:Name="glow" Width="Auto" Grid.RowSpan="2" CornerRadius="4,4,4,4">
+                        <Border.Background>
+                            <RadialGradientBrush>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1.702" ScaleY="2.243"/>
+                                        <SkewTransform AngleX="0" AngleY="0"/>
+                                        <RotateTransform Angle="0"/>
+                                        <TranslateTransform X="-0.368" Y="-0.152"/>
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                                <GradientStop Color="#B28DBDFF" Offset="0"/>
+                                <GradientStop Color="#CC123CFF" Offset="1"/>
+                                <!--Originally #008DBDFF-->
+                            </RadialGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Grid.RowSpan="2"/>
+                    <Border HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="shine" Width="Auto" CornerRadius="4,4,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.494,0.889" StartPoint="0.494,0.028">
+                                <GradientStop Color="#99FFFFFF" Offset="0"/>
+                                <GradientStop Color="#33FFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Opacity" TargetName="shine" Value="0.4"/>
+                <Setter Property="Background" TargetName="border" Value="#CC000000"/>
+                <Setter Property="Visibility" TargetName="glow" Value="Hidden"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard x:Name="Timeline2_BeginStoryboard" Storyboard="{StaticResource Timeline2}"/>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Default RepeatButton Template -->
+    <ControlTemplate x:Key="GlassRepeatButton" TargetType="{x:Type RepeatButton}">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="Timeline1">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="Timeline2">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="glow" Storyboard.TargetProperty="(UIElement.Opacity)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ControlTemplate.Resources>
+        <Border BorderBrush="#FFFFFFFF" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+            <Border x:Name="border" Background="#7F000000" BorderBrush="#FF000000" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.507*"/>
+                        <RowDefinition Height="0.493*"/>
+                    </Grid.RowDefinitions>
+                    <Border Opacity="0" HorizontalAlignment="Stretch" x:Name="glow" Width="Auto" Grid.RowSpan="2" CornerRadius="4,4,4,4">
+                        <Border.Background>
+                            <RadialGradientBrush>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1.702" ScaleY="2.243"/>
+                                        <SkewTransform AngleX="0" AngleY="0"/>
+                                        <RotateTransform Angle="0"/>
+                                        <TranslateTransform X="-0.368" Y="-0.152"/>
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                                <GradientStop Color="#B28DBDFF" Offset="0"/>
+                                <GradientStop Color="#CC123CFF" Offset="1"/>
+                                <!--Originally #008DBDFF-->
+                            </RadialGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto" Grid.RowSpan="2"/>
+                    <Border HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="shine" Width="Auto" CornerRadius="4,4,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.494,0.889" StartPoint="0.494,0.028">
+                                <GradientStop Color="#99FFFFFF" Offset="0"/>
+                                <GradientStop Color="#33FFFFFF" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Grid>
+            </Border>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Opacity" TargetName="shine" Value="0.4"/>
+                <Setter Property="Background" TargetName="border" Value="#CC000000"/>
+                <Setter Property="Visibility" TargetName="glow" Value="Hidden"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard x:Name="Timeline2_BeginStoryboard" Storyboard="{StaticResource Timeline2}"/>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="WiderSVBar" TargetType="{x:Type ScrollViewer}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Grid.Column="0">
+                <ScrollContentPresenter CanContentScroll="True" Content="{TemplateBinding ScrollViewer.Content}" />
+            </Border>
+            <Border Grid.Row="0" Grid.Column="1" BorderThickness="5,0,0,0" BorderBrush="#77FFFFFF" CornerRadius="10" Visibility="{TemplateBinding ScrollViewer.ComputedVerticalScrollBarVisibility}">
+                <ScrollBar Orientation="Vertical" Background="#55A0A0A0" Width="25" MinWidth="25" Minimum="0" Maximum="{TemplateBinding ScrollViewer.ScrollableHeight}" Value="{TemplateBinding ScrollViewer.VerticalOffset}" ViewportSize="{TemplateBinding ScrollViewer.ViewportHeight}" Name="PART_VerticalScrollBar" Visibility="{TemplateBinding ScrollViewer.ComputedVerticalScrollBarVisibility}"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,5,0,0" BorderBrush="#77FFFFFF" CornerRadius="10" Visibility="{TemplateBinding ScrollViewer.ComputedHorizontalScrollBarVisibility}">
+                <ScrollBar Orientation="Horizontal" Background="#55A0A0A0" Height="25" MinHeight="25" Minimum="0" Maximum="{TemplateBinding ScrollViewer.ScrollableWidth}" Value="{TemplateBinding ScrollViewer.HorizontalOffset}" ViewportSize="{TemplateBinding ScrollViewer.ViewportWidth}" Name="PART_HorizontalScrollBar" Visibility="{TemplateBinding ScrollViewer.ComputedHorizontalScrollBarVisibility}"/>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" CornerRadius="10,0,0,0" Background="#77FFFFFF" />
+        </Grid>
+    </ControlTemplate>
+
+</ResourceDictionary>

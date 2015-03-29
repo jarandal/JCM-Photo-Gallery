@@ -1,0 +1,209 @@
+﻿<Window x:Class="JMC_Photo_Gallery.Window_MoviePlayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pd="clr-namespace:JMC_Photo_Gallery"
+    Name="Window_MoviePlayer_Root" Title="Window_MoviePlayer"
+    Height="600" Width="600" WindowState="Maximized"
+    Loaded="Window_Loaded" Closing="Window_Closing" KeyDown="Key_Press">
+
+    <Window.Resources>
+        <!-- STYLES -->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Template" Value="{DynamicResource GlassButton}" />
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="{x:Type ScrollViewer}">
+            <Setter Property="Template" Value="{DynamicResource WiderSVBar}" />
+        </Style>
+
+        <!-- CONVERTERS -->
+        <pd:DoublePrecisionConverter x:Key="doublePrecisionConverter" />
+        <!-- StringFormat is .Net3.5 SP1 Feature.  -->
+
+        <!-- RESOURCES -->
+        <pd:MovieCollection x:Key="DisplayMovies"/>
+
+        <!-- DATA TEMPLATES -->
+        <ItemsPanelTemplate x:Key="MovieFileLayoutPanel">
+            <WrapPanel />
+            <!-- <WrapPanel Width="1100" /> -->
+        </ItemsPanelTemplate>
+
+        <DataTemplate x:Key="MovieFileTemplate">
+            <Border BorderThickness="5">
+                <StackPanel MouseLeftButtonDown="StackPanel_MouseLeftButtonDown">
+                    <TextBlock Text="{Binding Name}" ToolTip="{Binding Name}" Width="100" TextWrapping="NoWrap" />
+                    <pd:UserControl_MediaElement_Ext SourceUri="{Binding Uri}" MainWidth="100" MainHeight="100"
+                                                     PreviewMouseLeftButtonDown="UserControl_MediaElement_Ext_PreviewMouseLeftButtonDown"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="MovieFolderLayoutPanel">
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Background>
+                    <LinearGradientBrush EndPoint="0,0" StartPoint="1,0.3" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+                        <GradientStop Color="RoyalBlue" Offset="0"/>
+                        <GradientStop Color="#00A6FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </StackPanel.Background>
+            </StackPanel>
+        </ItemsPanelTemplate>
+
+        <DataTemplate x:Key="MovieFolderTemplate">
+            <Border Background="#404040" Margin="6">
+                <StackPanel Orientation="Vertical" Margin="4,0,0,4">
+                    <Button Cursor="Hand" Click="FolderButton_Click" Content="{Binding Path}">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <TextBlock Text="{Binding Path}" FontSize="16" Foreground="White" TextWrapping="Wrap" Padding="5" Width="1100">
+                                    <TextBlock.Background>
+                                        <LinearGradientBrush EndPoint="0,0.9" StartPoint="0.812,0.096" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+                                            <GradientStop Color="#77FFFFFF" Offset="0"/>
+                                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </TextBlock.Background>
+                                </TextBlock>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <ItemsControl ItemsSource="{Binding Path=MovieFiles}"
+                        ItemsPanel="{StaticResource MovieFileLayoutPanel}"
+                        ItemTemplate="{StaticResource MovieFileTemplate}"/>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <!-- ====== END ===== -->
+    </Window.Resources>
+
+    <Grid Name="x_Root" Background="#404040">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Expander Grid.Column="1" Name="x_MoviesExpender"
+                      Foreground="White" Background="#202020"
+                      IsExpanded="True" ExpandDirection="Right">
+                <Expander.Header>
+                    <Grid>
+                        <Rectangle Width="20" Height="200" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Rectangle.Fill>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <TextBlock Foreground="White" Text="Click To Show/Hide List">
+                                            <TextBlock.RenderTransformOrigin>
+                                                <Point X="0.5" Y="0.5"></Point>
+                                            </TextBlock.RenderTransformOrigin>
+                                            <TextBlock.RenderTransform>
+                                                <RotateTransform Angle="-90" />
+                                            </TextBlock.RenderTransform>
+                                        </TextBlock>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Rectangle Fill="#00000000" Cursor="Hand" Width="50" Height="{Binding ElementName=x_MoviesExpender, Path=ActualHeight}" />
+                    </Grid>
+                </Expander.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0,0.9" StartPoint="0.812,0.096" MappingMode="RelativeToBoundingBox" SpreadMethod="Pad">
+                                <GradientStop Color="#77FF9F4C" Offset="0"/>
+                                <GradientStop Color="#00FF9F4C" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <CheckBox Name="x_syncCheckbox" Grid.Row="0" IsChecked="False"
+                          Content="Continue Movie From The Thumbnail." Foreground="White"
+                          Margin="10, 5" />
+                    <ScrollViewer  Grid.Row="1"
+                        Width="{Binding ElementName=x_ExpenderWidth, Path=ActualWidth}"
+                        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                        <!-- HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"> -->
+                        <ItemsControl ItemsSource="{Binding Source={StaticResource DisplayMovies}, Path=MovieFolders}"
+				                ItemsPanel="{StaticResource MovieFolderLayoutPanel}"
+				                ItemTemplate="{StaticResource MovieFolderTemplate}"/>
+                    </ScrollViewer>
+                </Grid>
+            </Expander>
+
+            <MediaElement Grid.Column="0" Name="x_MediaElement"
+                          LoadedBehavior="Manual" UnloadedBehavior="Close" Stretch="Uniform"
+                          MediaOpened="OnMediaOpened" MediaEnded="x_MediaElement_MediaEnded" ScrubbingEnabled="True"
+                          />
+        </Grid>
+
+        <StackPanel Grid.Row="1" Name="x_ControlPanel" Margin="10" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Name="x_ExpenderWidth" />
+        </Grid>
+        <StackPanel Grid.Row="1" Background="#202020" >
+            <Slider Name="x_TimelineSlider" Margin="5" Width="{Binding ElementName=x_ControlPanel, Path=ActualWidth}"
+                    AutoToolTipPlacement="BottomRight" ToolTip="Progress Bar (M or N Key)"
+                    LostMouseCapture="TimelineSlider_LostMouseCapture" LostKeyboardFocus="TimelineSlider_LostKeyboardFocus" />
+            <Grid>
+                <TextBlock Name="x_FileNameTextBlock" Text="Playing: None" Foreground="White" Margin="10,0" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding ElementName=x_TimelineSlider, Path=Value, Converter={StaticResource doublePrecisionConverter}}" Foreground="White" Width="100" TextAlignment="Right" />
+                    <TextBlock Text="/" Foreground="White" FontWeight="Bold" Margin="10, 0" />
+                    <TextBlock Text="{Binding ElementName=x_TimelineSlider, Path=Maximum, Converter={StaticResource doublePrecisionConverter}}" Foreground="White" Width="100" TextAlignment="Left" />
+                </StackPanel>
+            </Grid>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <!-- Play button. -->
+                <Button Click="Previous_Click" Name="Previous" Content="9" ToolTip="Previous (MediaBack or 1/4/7 Key)" Width="40" Height="40" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Webdings" />
+                <Button Click="Play_Click" Name="Play" Content="4" ToolTip="Play/Pause (MediaPlay or 2/5/8 Key)" Width="40" Height="40" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Webdings" />
+                <Button Click="Next_Click" Name="Next" Content=":" ToolTip="Next (MediaNext or 3/6/9 Key)" Width="40" Height="40" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Webdings" />
+                <Button Click="Stop_Click" Name="Stop" Content="o" ToolTip="Stop (MediaStop or 0 Key)" Width="40" Height="40" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Wingdings" />
+
+                <!-- Volume slider. This slider allows a Volume range between 0 and 1. -->
+                <StackPanel Orientation="Horizontal" ToolTip="Volume (+ or - Key)">
+                    <TextBlock Foreground="White" Text="U" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Webdings" Margin="5" />
+                    <Slider Name="x_VolumeSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume"
+                            AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="2"
+                            Minimum="0" Maximum="1" Value="1" Width="70" />
+                </StackPanel>
+
+                <!-- Speed slider. This slider allows a Speed range between 1 and 5. -->
+                <StackPanel Orientation="Horizontal" ToolTip="Speed (&gt; or &lt; Key)">
+                    <TextBlock Foreground="White" Text="~" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Webdings" Margin="5" />
+                    <Slider Name="x_SpeedRatioSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaSpeedRatio"
+                            AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"
+                            Minimum="1" Maximum="5" Value="1" Width="70" 
+                            IsSnapToTickEnabled="True" TickPlacement="TopLeft" TickFrequency="1" />
+                </StackPanel>
+
+                <!-- Blance slider. This slider allows a Volume range between 1 and 10. -->
+                <StackPanel Orientation="Horizontal" ToolTip="Balance (NumPad* or NumPad/ Key)">
+                    <TextBlock Foreground="White" Text="X" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Webdings" Margin="5">
+                        <TextBlock.RenderTransform>
+                            <RotateTransform Angle="180" CenterX="10" CenterY="12" />
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                    <TextBlock Foreground="White" Text="X" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" FontFamily="Webdings" Margin="5" />
+                    <Slider Name="x_BalanceSlider" VerticalAlignment="Center" ValueChanged="ChangeMediaBalance"
+                            AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="1"
+                            Minimum="-1" Maximum="1" Value="0" Width="70"
+                            IsSnapToTickEnabled="True" TickPlacement="TopLeft" TickFrequency="0.1"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

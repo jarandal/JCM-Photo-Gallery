@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="JMC_Photo_Gallery.UserControl_MediaElement_Ext"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pd="clr-namespace:JMC_Photo_Gallery"
+    Name="MainControl" Height="200" Width="200" Unloaded="UserControl_Unloaded">
+    <Grid Width="{Binding ElementName=MainControl, Path=ActualWidth}"
+          Height="{Binding ElementName=MainControl, Path=ActualHeight}">
+        <Button Name="MainButton" Background="AliceBlue" Opacity="0.3"
+                MouseEnter="MainButton_MouseEnter" MouseLeave="MainButton_MouseLeave">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Play" Click="MenuItem_Click_Play" FontWeight="Bold" />
+                    <MenuItem Header="Pause" Click="MenuItem_Click_Pause" />
+                    <MenuItem Header="Stop" Click="MenuItem_Click_Stop" />
+                    <MenuItem Header="Release" Click="MenuItem_Click_ConvertToThumb" />
+                    <Separator />
+                    <MenuItem Header="Reset Default Thumb" Click="MenuItem_Click_Reset" />
+                    <MenuItem Header="Save As Default Thumb" Click="MenuItem_Click_SaveThumb" />
+                    <MenuItem Header="Reset Thumbs In Same Folder" Click="MenuItem_Click_ResetFolder" />
+                    <Separator />
+                    <MenuItem Header="Show Thumb Folder" Click="MenuItem_Click_ShowThumbFolder" />
+                    <MenuItem Header="Show Movie Folder" Click="MenuItem_Click_ShowMovieFolder" />
+                    <Separator />
+                    <MenuItem Header="Indicators">
+                        <!--
+                        <MenuItem Header="SELF" FontWeight="Bold" Background="AliceBlue" IsEnabled="False" />
+                        <MenuItem Header="ALL On" Tag="Self,ALL,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="ALL Off" Tag="Self,ALL,Off" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Status On" Tag="Self,Status,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Status Off" Tag="Self,Status,Off" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Recording On" Tag="Self,Recording,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Recording Off" Tag="Self,Recording,Off" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Saving On" Tag="Self,Saving,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Saving Off" Tag="Self,Saving,Off" Click="MenuItem_Click_Indicator" />
+                        -->
+                        <MenuItem Header="GLOBAL" FontWeight="Bold" Background="AliceBlue" IsEnabled="False" />
+                        <MenuItem Header="ALL On" Tag="Global,ALL,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="ALL Off" Tag="Global,ALL,Off" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Status On" Tag="Global,Status,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Status Off" Tag="Global,Status,Off" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Recording On" Tag="Global,Recording,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Recording Off" Tag="Global,Recording,Off" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Saving On" Tag="Global,Saving,On" Click="MenuItem_Click_Indicator" />
+                        <MenuItem Header="Saving Off" Tag="Global,Saving,Off" Click="MenuItem_Click_Indicator" />
+                    </MenuItem>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+        <Grid Margin="2">
+            <Grid IsHitTestVisible="False"
+              HorizontalAlignment="Center" VerticalAlignment="Center">
+                <!-- This Grid Is To Make Sure MediaElement Didn't Move, for Render(MediaElement) -->
+                <MediaElement Name="x_Player" IsHitTestVisible="False"
+                          Stretch="Uniform" ScrubbingEnabled="True"
+                          LoadedBehavior="Manual" UnloadedBehavior="Close"
+                          MediaEnded="Player_MediaEnded" />
+            </Grid>
+            <Image Name="x_Thumb" IsHitTestVisible="False"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Stretch="Uniform" />
+            <Grid Name="x_Indicator_All" IsHitTestVisible="False"
+              HorizontalAlignment="Left" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Grid Name="x_Indicator_Group1">
+                        <Grid Name="x_Indicator_ShowMedia" Visibility="Hidden">
+                            <Polygon Width="10" Height="10" Points="2,0 9,5 2,10" Stroke="Black" Fill="Green" />
+                        </Grid>
+                        <Grid Name="x_Indicator_ShowThumb" Visibility="Hidden">
+                            <Polygon Width="10" Height="10" Points="2,0 9,5 2,10" Stroke="Black" Fill="Orange" />
+                        </Grid>
+                    </Grid>
+                    <Grid Name="x_Indicator_Group2">
+                        <Grid Name="x_Indicator_Recording" Visibility="Hidden">
+                            <Ellipse Width="10" Height="10" Stroke="Black" Fill="Red" />
+                        </Grid>
+                        <Grid Name="x_Indicator_RecordingSucessful" Visibility="Hidden">
+                            <Ellipse Width="10" Height="10" Stroke="Black" Fill="Green" />
+                        </Grid>
+                        <Grid Name="x_Indicator_RecordingFailed" Visibility="Hidden">
+                            <Ellipse Width="10" Height="10" Stroke="Black" Fill="DarkGray" />
+                        </Grid>
+                    </Grid>
+                    <Grid Name="x_Indicator_Group3">
+                        <Grid Name="x_Indicator_ResetWaiting" Visibility="Hidden">
+                            <Rectangle Width="10" Height="10" Stroke="Black" Fill="Orange" />
+                        </Grid>
+                        <Grid Name="x_Indicator_Saving" Visibility="Hidden">
+                            <Rectangle Width="10" Height="10" Stroke="Black" Fill="Red" />
+                        </Grid>
+                        <Grid Name="x_Indicator_SavingSucessful" Visibility="Hidden">
+                            <Rectangle Width="10" Height="10" Stroke="Black" Fill="Green" />
+                        </Grid>
+                        <Grid Name="x_Indicator_SavingFailed" Visibility="Hidden">
+                            <Rectangle Width="10" Height="10" Stroke="Black" Fill="DarkGray" />
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

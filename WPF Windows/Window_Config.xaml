@@ -1,0 +1,210 @@
+﻿<Window x:Class="JMC_Photo_Gallery.Window_Config"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pd="clr-namespace:JMC_Photo_Gallery"
+    Title="Window_Config" Height="600" Width="500"
+        AllowsTransparency="True" WindowStyle="None" Background="#00FFFFFF" WindowStartupLocation="CenterScreen">
+    <Border Name="WindowBorder" CornerRadius="10,10,10,10" BorderThickness="8" BorderBrush="#CC000000" Background="{DynamicResource WindowGradient}">
+        <Border CornerRadius="7,7,7,7" Background="#99FFFFFF">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="4,4,0,0" BorderBrush="#B2FF6A00" BorderThickness="0,1,0,0" Background="#B2FF6A00">
+                    <Label FontSize="14" FontWeight="Bold" MouseLeftButtonDown="Window_MouseLeftButtonDown" Cursor="SizeAll">Preferences</Label>
+                </Border>
+                <TabControl Grid.Row="1" Background="#99FFFFFF">
+                    <TabItem Header="General" Name="_tabGeneral">
+                        <StackPanel Margin="10">
+                            <TextBlock FontWeight="Bold" Background="#A8FFA400" Margin="0,10">Search Under Folders</TextBlock>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="300" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
+                                <ListBox Name="_galleryList" Grid.Row="0" Grid.Column="0"></ListBox>
+                                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                                    <Button Click="GalleryAdd_Click" Width="100" Margin="10, 2">Add</Button>
+                                    <Button Click="GalleryRemove_Click" Width="100" Margin="10, 2">Remove</Button>
+                                </StackPanel>
+                                <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                                    <Button Click="GalleryMoveUp_Click" Margin="2, 10">
+                                        <TextBlock Text="Move Up" TextWrapping="Wrap" TextAlignment="Center" /></Button>
+                                    <Button Click="GalleryMoveDown_Click" Margin="2, 10">
+                                        <TextBlock Text="Move Down" TextWrapping="Wrap" TextAlignment="Center" /></Button>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Slide Show" Name="_tabSlideshow">
+                        <StackPanel Margin="10">
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" Background="#A8FFA400" Margin="0,10">Slide Show</TextBlock>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <TextBlock Width="150" VerticalAlignment="Center">Default Mode</TextBlock>
+                                    <ListBox Name="_slideDefaultMode">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center" IsSelected="True">[ Standard 1 ]</ListBoxItem>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center">[ Standard 2 ]</ListBoxItem>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center">[ Scatter 1 ]</ListBoxItem>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center">[ Scatter 2 ]</ListBoxItem>
+                                    </ListBox>
+                                </StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="70" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0"></TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="1">Standard 1</TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="2">Standard 2</TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="3">Scatter 1</TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="4">Scatter 2</TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="0">Image Count</TextBlock>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Name="_slideImgCount1" IsEnabled="False">1</TextBox>
+                                    <TextBox Grid.Row="1" Grid.Column="2" Name="_slideImgCount2" IsEnabled="False">1</TextBox>
+                                    <TextBox Grid.Row="1" Grid.Column="3" Name="_slideImgCount3">1</TextBox>
+                                    <TextBox Grid.Row="1" Grid.Column="4" Name="_slideImgCount4">1</TextBox>
+                                    <TextBlock Grid.Row="2" Grid.Column="0">Duration (Seconds)</TextBlock>
+                                    <TextBox Grid.Row="2" Grid.Column="1" Name="_slideDuration1">1</TextBox>
+                                    <TextBox Grid.Row="2" Grid.Column="2" Name="_slideDuration2">1</TextBox>
+                                    <TextBox Grid.Row="2" Grid.Column="3" Name="_slideDuration3">1</TextBox>
+                                    <TextBox Grid.Row="2" Grid.Column="4" Name="_slideDuration4">1</TextBox>
+                                    <TextBlock Grid.Row="3" Grid.Column="0">Fading (ms) (Auto)</TextBlock>
+                                    <TextBox Grid.Row="3" Grid.Column="1" Name="_slideFadeA1">1</TextBox>
+                                    <TextBox Grid.Row="3" Grid.Column="2" Name="_slideFadeA2">1</TextBox>
+                                    <TextBox Grid.Row="3" Grid.Column="3" Name="_slideFadeA3">1</TextBox>
+                                    <TextBox Grid.Row="3" Grid.Column="4" Name="_slideFadeA4">1</TextBox>
+                                    <TextBlock Grid.Row="4" Grid.Column="0">Fading (ms) (Manual)</TextBlock>
+                                    <TextBox Grid.Row="4" Grid.Column="1" Name="_slideFadeM1">1</TextBox>
+                                    <TextBox Grid.Row="4" Grid.Column="2" Name="_slideFadeM2">1</TextBox>
+                                    <TextBox Grid.Row="4" Grid.Column="3" Name="_slideFadeM3">1</TextBox>
+                                    <TextBox Grid.Row="4" Grid.Column="4" Name="_slideFadeM4">1</TextBox>
+                                </Grid>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock FontWeight="Bold" Background="#A8FFA400" Margin="0,10">Screen Saver</TextBlock>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <TextBlock Width="150" VerticalAlignment="Center">Default Mode</TextBlock>
+                                    <ListBox Name="_saverDefaultMode">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center" IsSelected="True">[ Standard 1 ]</ListBoxItem>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center" >[ Standard 2 ]</ListBoxItem>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center">[ Scatter 1 ]</ListBoxItem>
+                                        <ListBoxItem Width="69" HorizontalContentAlignment="Center">[ Scatter 2 ]</ListBoxItem>
+                                    </ListBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                    <TextBlock Width="150" VerticalAlignment="Center">Quit When Mouse Move</TextBlock>
+                                    <ListBox Name="_saverQuitWhenMouseMove">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <ListBoxItem Width="80" HorizontalContentAlignment="Center" IsSelected="True">[ Yes ]</ListBoxItem>
+                                        <ListBoxItem Width="80" HorizontalContentAlignment="Center">[ No ]</ListBoxItem>
+                                    </ListBox>
+                                </StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="70" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0"></TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="1">Standard 1</TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="2">Standard 2</TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="3">Scatter 1</TextBlock>
+                                    <TextBlock Grid.Row="0" Grid.Column="4">Scatter 2</TextBlock>
+                                    <TextBlock Grid.Row="1" Grid.Column="0">Image Count</TextBlock>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Name="_saverImgCount1" IsEnabled="False">1</TextBox>
+                                    <TextBox Grid.Row="1" Grid.Column="2" Name="_saverImgCount2" IsEnabled="False">1</TextBox>
+                                    <TextBox Grid.Row="1" Grid.Column="3" Name="_saverImgCount3">1</TextBox>
+                                    <TextBox Grid.Row="1" Grid.Column="4" Name="_saverImgCount4">1</TextBox>
+                                    <TextBlock Grid.Row="2" Grid.Column="0">Duration (Seconds)</TextBlock>
+                                    <TextBox Grid.Row="2" Grid.Column="1" Name="_saverDuration1">1</TextBox>
+                                    <TextBox Grid.Row="2" Grid.Column="2" Name="_saverDuration2">1</TextBox>
+                                    <TextBox Grid.Row="2" Grid.Column="3" Name="_saverDuration3">1</TextBox>
+                                    <TextBox Grid.Row="2" Grid.Column="4" Name="_saverDuration4">1</TextBox>
+                                    <TextBlock Grid.Row="3" Grid.Column="0">Fading (ms) (Auto)</TextBlock>
+                                    <TextBox Grid.Row="3" Grid.Column="1" Name="_saverFadeA1">1</TextBox>
+                                    <TextBox Grid.Row="3" Grid.Column="2" Name="_saverFadeA2">1</TextBox>
+                                    <TextBox Grid.Row="3" Grid.Column="3" Name="_saverFadeA3">1</TextBox>
+                                    <TextBox Grid.Row="3" Grid.Column="4" Name="_saverFadeA4">1</TextBox>
+                                    <TextBlock Grid.Row="4" Grid.Column="0">Fading (ms) (Manual)</TextBlock>
+                                    <TextBox Grid.Row="4" Grid.Column="1" Name="_saverFadeM1">1</TextBox>
+                                    <TextBox Grid.Row="4" Grid.Column="2" Name="_saverFadeM2">1</TextBox>
+                                    <TextBox Grid.Row="4" Grid.Column="3" Name="_saverFadeM3">1</TextBox>
+                                    <TextBox Grid.Row="4" Grid.Column="4" Name="_saverFadeM4">1</TextBox>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem Header="Tutorial" Name="_tabTutorial">
+                        <StackPanel Margin="10">
+                            <TextBlock FontWeight="Bold" Background="#A8FFA400" Margin="0,10">How does the navigation works?</TextBlock>
+                            <TextBlock>There are two major ways to navigate.</TextBlock>
+                            <TextBlock Margin="0, 5">1) Click on the folder name above the pictures. You will traverse the views:</TextBlock>
+                            <TextBlock>--- From [Home 2D] to [Collection].</TextBlock>
+                            <TextBlock>--- From [Collection] to [Folder].</TextBlock>
+                            <TextBlock>--- From [Folder] to [SlideShow].</TextBlock>
+                            <TextBlock>--- If you press <TextBlock FontFamily="Wingdings 3">p</TextBlock>, you will traverse backward.</TextBlock>
+                            <TextBlock Margin="0, 5">2) Double click on the picture. You will traverse the views:</TextBlock>
+                            <TextBlock>--- From [Home 2D] to [Folder].</TextBlock>
+                            <TextBlock>--- From [Collection] to [Folder].</TextBlock>
+                            <TextBlock>--- From [Folder] to [SlideShow].</TextBlock>
+                            <TextBlock Margin="0, 5">3) You can jump back to [Home 2D] by press [Home 2D].</TextBlock>
+                            <TextBlock Margin="0, 5">4) Additionally you can right click on the picture to see other options.</TextBlock>
+                            <TextBlock FontWeight="Bold" Background="#A8FFA400" Margin="0,10">How to make screen saver?</TextBlock>
+                            <TextBlock>1) Make a copy of this program.</TextBlock>
+                            <TextBlock>2) Rename its file extension ".exe" to ".scr" (screen saver file extension).</TextBlock>
+                            <TextBlock>3) Move the new copy into folder "C:\Windows\System32" .</TextBlock>
+                            <TextBlock>4) It will appear as one of the screen savers in your settings window.</TextBlock>
+                            <TextBlock FontWeight="Bold" Background="#A8FFA400" Margin="0,10">Need More Info?</TextBlock>
+                            <TextBlock VerticalAlignment="Center">Please visit website: <Hyperlink NavigateUri="http://www.jmcspot.com" Click="Website_Click">www.jmcspot.com</Hyperlink></TextBlock>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Width="70" Margin="5" Click="OK_Click">OK</Button>
+                    <Button Width="70" Margin="5" Click="Cancel_Click">Cancel</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

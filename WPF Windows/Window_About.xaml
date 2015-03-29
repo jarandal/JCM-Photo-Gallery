@@ -1,0 +1,73 @@
+﻿<Window x:Class="JMC_Photo_Gallery.Window_About"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="About" Height="500" Width="500"
+    AllowsTransparency="True" WindowStyle="None" Background="#00FFFFFF" WindowStartupLocation="CenterScreen">
+
+    <Border Name="WindowBorder" CornerRadius="10,10,10,10" BorderThickness="8" BorderBrush="#CC000000" Background="{DynamicResource WindowGradient}">
+        <Border CornerRadius="7,7,7,7" Background="#99FFFFFF">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="28" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" CornerRadius="4,4,0,0" BorderBrush="#B2FF6A00" BorderThickness="0,1,0,0" Background="#B2FF6A00">
+                    <Label FontSize="14" FontWeight="Bold" MouseLeftButtonDown="Window_MouseLeftButtonDown" Cursor="SizeAll">About</Label>
+                </Border>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <TextBlock Text="JMC" FontFamily="Freestyle Script" FontSize="50">
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="-60" />
+                                    <ScaleTransform ScaleY="1.5" />
+                                    <TranslateTransform Y="120" />
+                                </TransformGroup>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                        <Image Source="..\Resources\CrazyEye_Sleep.png" VerticalAlignment="Bottom" Margin="0,0,0,30" />
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <UniformGrid Grid.Row="0" Columns="1" Margin="10,10,10,10">
+                            <TextBlock Name="ProductName" VerticalAlignment="Center">Product</TextBlock>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Name="Version" VerticalAlignment="Center">Version</TextBlock>
+                            </Grid>
+                            <TextBlock Name="Copyright" VerticalAlignment="Center">Copyright</TextBlock>
+                            <TextBlock Name="CompanyName" VerticalAlignment="Center">Company</TextBlock>
+                            <TextBlock Name="Website" VerticalAlignment="Center">Website: <Hyperlink NavigateUri="http://www.jmcspot.com" Click="Website_Click">www.jmcspot.com</Hyperlink></TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Name="Donate" VerticalAlignment="Center">Donate:</TextBlock>
+                                <Button Cursor="Hand" Click="Donate_Click" Margin="5 0">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Image Source="..\Resources\paypal_logo.gif" Height="25"/>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
+                        </UniformGrid>
+                        <StackPanel Grid.Row="1" Margin="10,0,10,0">
+                            <TextBlock Text="Description"></TextBlock>
+                            <TextBox Name="Description" Height="140" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                        </StackPanel>
+                        <Button Grid.Row="2" Click="OK_Click" Content="OK" Foreground="AliceBlue" FontWeight="Bold" Width="100" Height="30" HorizontalAlignment="Right" Margin="0,5,10,5" Template="{DynamicResource GlassButton}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

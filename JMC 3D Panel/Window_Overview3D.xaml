@@ -1,0 +1,136 @@
+﻿<Window x:Class="JMC_Photo_Gallery.Window_Overview3D"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:WpfDiscipleBlogViewer3D"
+    xmlns:pd="clr-namespace:JMC_Photo_Gallery"
+    Loaded="Window_Loaded" Closing="Window_Closing"
+    Title="Window_Overview3D" Width="800" Height="600" WindowState="Maximized">
+
+    <Window.Resources>
+        <!-- STYLES -->
+        <Style TargetType="{x:Type pd:Window_Overview3D}">
+            <Setter Property="Background" Value="{DynamicResource WindowGradient}" />
+        </Style>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter  Property="Template"  Value="{DynamicResource GlassButton}" />
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="{x:Type RepeatButton}">
+            <Setter  Property="Template"  Value="{DynamicResource GlassRepeatButton}" />
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="{x:Type ScrollViewer}">
+            <Setter Property="Template" Value="{DynamicResource WiderSVBar}" />
+        </Style>
+
+        <!-- RESOURCES -->
+        <pd:OverviewDisplay_Collections x:Key="GalleryModel"/>
+
+        <!-- DATA TEMPLATES -->
+        <DataTemplate x:Key="Overview_File_Template">
+            <Button Cursor="Hand" Click="ImageButton_Click" Content="{Binding Path}">
+                <Button.Template>
+                    <ControlTemplate>
+                        <Border BorderBrush="AliceBlue" BorderThickness="3" Cursor="Hand" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave">
+                            <Image Source="{Binding Image}" Width="{Binding Width}" Height="{Binding Height}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Overview_Page_Template">
+            <ItemsControl
+                ItemsSource="{Binding Page}"
+                ItemTemplate="{StaticResource Overview_File_Template}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Background="Transparent"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Overview_Folder_Template">
+            <DockPanel Margin="4" Background="Transparent" Width="{Binding FolderWidth}">
+                <!-- NAVIGATION BUTTONS -->
+                <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,0,0,4" Orientation="Horizontal">
+                    <RepeatButton Click="MoveBackButtonClicked" Content="`" FontFamily="Wingdings 3" FontSize="20" FontWeight="Bold"
+                                  Width="50" Height="30"/>
+                    <Rectangle Width="10" />
+                    <RepeatButton Click="MoveForwardButtonClicked" Content="_" FontFamily="Wingdings 3" FontSize="20" FontWeight="Bold"
+                                  Width="50" Height="30"/>
+                    <Rectangle Width="10" />
+                    <Button Click="ViewCollection_Click" Content="View Collection" Tag="{Binding Path}"
+                                  Width="100" Height="30"/>
+                </StackPanel>
+
+                <!-- BLOGGER IMAGE CAROUSEL -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!-- Lable At Botton Layer -->
+                    <StackPanel Grid.Row="0">
+                        <Border Background="#7D404040" BorderBrush="AliceBlue" BorderThickness="1" CornerRadius="5">
+                            <Label Content="{Binding Path}" HorizontalAlignment="Center" Foreground="White" FontWeight="Bold" />
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 3D Panel -->
+                    <ListBox Grid.Row="0" Background="Transparent" BorderBrush="Transparent"
+                         Focusable="False" IsSynchronizedWithCurrentItem="True"
+                         ItemsSource="{Binding Folder}"
+                         ItemTemplate="{StaticResource Overview_Page_Template}">
+                        <!-- 
+                        Tell the ItemsControl to use our custom
+                        3D layout panel to arrage its items.
+                        -->
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <local:Panel3D Loaded="OnPanel3DLoaded" Background="Transparent"
+                                               Cursor="ScrollE" MouseLeftButtonDown="Panel3D_MouseLeftButtonDown"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <!--<Setter Property="Width" Value="{Binding PageWidth}" />-->
+                                <!--<Setter Property="Height" Value="{Binding PageHeight}" />-->
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                            <ContentPresenter ContentSource="Content" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+
+                </Grid>
+            </DockPanel>
+        </DataTemplate>
+
+        <!-- ====== END ===== -->
+    </Window.Resources>
+
+    <Grid Name="HostPanel" Background="Transparent">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Source={StaticResource GalleryModel}, Path=Collections}"
+				ItemTemplate="{StaticResource Overview_Folder_Template}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+        <Button Click="BackToGallery_Click" Content="Back To Gallery" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                  Width="100" Height="30"/>
+    </Grid>
+</Window>
