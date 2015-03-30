@@ -50,6 +50,21 @@ namespace JMC_Photo_Gallery
                 this.NotifyPropertyChanged("ColorCode");
             }
         }
+
+        private Boolean _selected;
+
+        public Boolean Selected
+        {
+            get { 
+                return _selected; 
+            }
+            set { 
+                _selected = value;
+                this.NotifyPropertyChanged("Selected");
+            }
+        }
+
+        
     }
 
     public class ImageCollection

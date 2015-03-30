@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Threading; // DispatchTimer
+using System.Windows.Data;
 
 namespace JMC_Photo_Gallery
 {
@@ -78,8 +79,8 @@ namespace JMC_Photo_Gallery
 
         private void CloseExtras()
         {
-            if (_Window_Overview3D != null)
-                _Window_Overview3D.Close();
+            //if (_Window_Overview3D != null)
+            //    _Window_Overview3D.Close();
             if (_Window_SlideShow != null)
                 _Window_SlideShow.Close();
             if (_Window_MoviePlayer != null)
@@ -448,41 +449,41 @@ namespace JMC_Photo_Gallery
 
         #endregion
 
-        #region Integration With Window_Overview3D
+        //#region Integration With Window_Overview3D
 
-        Window_Overview3D _Window_Overview3D;
-        private void Home3D_Click(object sender, RoutedEventArgs e)
-        {
-            if (_Window_Overview3D == null || !_Window_Overview3D.IsLoaded)
-            {
-                OverviewDisplay_File.s_thumbPathMaker = AR.GrandThumbPathMaker;
-                _Window_Overview3D = new Window_Overview3D();
-                _Window_Overview3D.Show();
-                _Window_Overview3D.Activate();
-            }
-            else
-            {
-                _Window_Overview3D.Show();
-                _Window_Overview3D.Activate();
-            }
-        }
+        //Window_Overview3D _Window_Overview3D;
+        //private void Home3D_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (_Window_Overview3D == null || !_Window_Overview3D.IsLoaded)
+        //    {
+        //        OverviewDisplay_File.s_thumbPathMaker = AR.GrandThumbPathMaker;
+        //        _Window_Overview3D = new Window_Overview3D();
+        //        _Window_Overview3D.Show();
+        //        _Window_Overview3D.Activate();
+        //    }
+        //    else
+        //    {
+        //        _Window_Overview3D.Show();
+        //        _Window_Overview3D.Activate();
+        //    }
+        //}
 
-        public void ShowHome()
-        {
-            LoadHome_Driver();
-        }
+        //public void ShowHome()
+        //{
+        //    LoadHome_Driver();
+        //}
 
-        public void ShowCollection(string path)
-        {
-            LoadCollection_Driver(path);
-        }
+        //public void ShowCollection(string path)
+        //{
+        //    LoadCollection_Driver(path);
+        //}
 
-        public void ShowFolder(string path)
-        {
-            LoadFolder_Driver(path);
-        }
+        //public void ShowFolder(string path)
+        //{
+        //    LoadFolder_Driver(path);
+        //}
 
-        #endregion
+        //#endregion
 
         #region Integration With Window_SlideShow
 
@@ -610,5 +611,18 @@ namespace JMC_Photo_Gallery
 
         #endregion
 
+        #region "JAL"
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            ImageFile imagefile = (ImageFile)button.DataContext;
+            imagefile.Selected = !imagefile.Selected;
+        }
+
+       
+        #endregion
+
+
     }
+
 }

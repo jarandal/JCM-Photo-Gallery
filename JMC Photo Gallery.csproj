@@ -91,14 +91,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="JMC 3D Panel\Scene.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="JMC 3D Panel\Window_Overview3D.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="JMC Slide Show\Window_SlideShow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -172,15 +164,7 @@
     <Compile Include="Base Code\ObservableCollection2D.cs" />
     <Compile Include="Base Code\ThumbManager.cs" />
     <Compile Include="Base Code\ThumbPathManager.cs" />
-    <Compile Include="JMC 3D Panel\ConceptualPanel.cs" />
-    <Compile Include="JMC 3D Panel\DisconnectedUIElementCollection.cs" />
-    <Compile Include="JMC 3D Panel\LogicalPanel.cs" />
-    <Compile Include="JMC 3D Panel\OverviewDisplay.cs" />
-    <Compile Include="JMC 3D Panel\Panel3D.cs" />
-    <Compile Include="JMC 3D Panel\Panel3DAdorner.cs" />
-    <Compile Include="JMC 3D Panel\Window_Overview3D.xaml.cs">
-      <DependentUpon>Window_Overview3D.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="JMC Photo Gallery\Converters.cs" />
     <Compile Include="JMC Photo Gallery\Window_PhotoGallery.xaml.cs">
       <DependentUpon>Window_PhotoGallery.xaml</DependentUpon>
       <SubType>Code</SubType>
