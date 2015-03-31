@@ -7,7 +7,7 @@ using System.IO;
 namespace JMC_Photo_Gallery
 {
     public class AR
-    {
+    { 
         #region Import Export Setting Classes
 
         public class ImportNode
